@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Консультация олиш</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/logo.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Логотип" class="logo">
+                <h2 class="logo-text">InterAutoSchool</h2>
+                <p class="logo-subtitle">Автошкола</p>
+            </div>
+            
+            <div class="form-header">
+                <h1>Консультация олиш</h1>
+                <p>Маълумотларингизни қолдиринг, тез орада сиз билан боғланамиз</p>
+            </div>
+            
+            <form id="leadForm" class="lead-form">
+                <!-- Скрытые поля для UTM параметров -->
+                <input type="hidden" name="utm_source" value="{{ utm_source }}">
+                <input type="hidden" name="utm_medium" value="{{ utm_medium }}">
+                <input type="hidden" name="utm_campaign" value="{{ utm_campaign }}">
+                <input type="hidden" name="utm_term" value="{{ utm_term }}">
+                <input type="hidden" name="utm_content" value="{{ utm_content }}">
+                
+                <div class="form-group">
+                    <label for="name">Исмингиз</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        placeholder="Исмингизни киритинг"
+                        required
+                        autocomplete="name"
+                    >
+                    <span class="error-message" id="name-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Телефон рақами</label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone" 
+                        placeholder="+998 (99) 123-45-67"
+                        required
+                        autocomplete="tel"
+                    >
+                    <span class="error-message" id="phone-error"></span>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span class="btn-text">Ариза жўнатиш</span>
+                    <span class="btn-loading" style="display: none;">
+                        <div class="spinner"></div>
+                        Жўнатилмоқда...
+                    </span>
+                </button>
+            </form>
+            
+            <div class="form-footer">
+                <p>"Ариза жўнатиш" тугмасини босганда, шахсий маълумотларингизни қайта ишлашга розилик берасиз</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('leadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            const formData = new FormData(form);
+            
+            // Очистка предыдущих ошибок
+            clearErrors();
+            
+            // Показываем состояние загрузки
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'flex';
+            
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Успешная отправка
+                    showSuccessMessage(result.message);
+                    form.reset();
+                } else {
+                    // Ошибка валидации
+                    showErrorMessage(result.message);
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showErrorMessage('Произошла ошибка. Попробуйте позже.');
+            } finally {
+                // Возвращаем кнопку в исходное состояние
+                submitBtn.disabled = false;
+                btnText.style.display = 'block';
+                btnLoading.style.display = 'none';
+            }
+        });
+        
+        function clearErrors() {
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.textContent = '';
+                error.style.display = 'none';
+            });
+        }
+        
+        function showErrorMessage(message) {
+            // Показываем общее сообщение об ошибке
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message general-error';
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            const form = document.getElementById('leadForm');
+            form.insertBefore(errorDiv, form.firstChild);
+            
+            // Скрываем через 5 секунд
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.parentNode.removeChild(errorDiv);
+                }
+            }, 5000);
+        }
+        
+        function showSuccessMessage(message) {
+            // Показываем сообщение об успехе
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            const form = document.getElementById('leadForm');
+            form.insertBefore(successDiv, form.firstChild);
+            
+            // Скрываем через 3 секунды
+            setTimeout(() => {
+                if (successDiv.parentNode) {
+                    successDiv.parentNode.removeChild(successDiv);
+                }
+            }, 3000);
+        }
+        
+        // Форматирование номера телефона (Узбекистан)
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.startsWith('998')) {
+                    value = value.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, '+$1 ($2) $3-$4-$5');
+                } else if (value.startsWith('8')) {
+                    value = '998' + value.slice(1);
+                    value = value.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, '+$1 ($2) $3-$4-$5');
+                } else if (value.startsWith('9')) {
+                    value = '998' + value;
+                    value = value.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, '+$1 ($2) $3-$4-$5');
+                }
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>

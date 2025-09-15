@@ -1,0 +1,59 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Внешний круг с веревочной текстурой -->
+  <circle cx="40" cy="40" r="38" stroke="#1e40af" stroke-width="3" fill="none"/>
+  <circle cx="40" cy="40" r="35" stroke="#1e40af" stroke-width="1" fill="none"/>
+  
+  <!-- Лавровый венок -->
+  <g stroke="#1e40af" stroke-width="1.5" fill="none">
+    <!-- Верхняя часть венка -->
+    <path d="M15 25 Q25 15, 40 20 Q55 15, 65 25" stroke-linecap="round"/>
+    <path d="M18 28 Q28 18, 40 23 Q52 18, 62 28" stroke-linecap="round"/>
+    <path d="M20 30 Q30 20, 40 25 Q50 20, 60 30" stroke-linecap="round"/>
+    
+    <!-- Нижняя часть венка -->
+    <path d="M15 55 Q25 65, 40 60 Q55 65, 65 55" stroke-linecap="round"/>
+    <path d="M18 52 Q28 62, 40 57 Q52 62, 62 52" stroke-linecap="round"/>
+    <path d="M20 50 Q30 60, 40 55 Q50 60, 60 50" stroke-linecap="round"/>
+    
+    <!-- Боковые части -->
+    <path d="M10 35 Q5 40, 10 45" stroke-linecap="round"/>
+    <path d="M70 35 Q75 40, 70 45" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Грузовик -->
+  <g fill="#1e40af">
+    <!-- Кабина -->
+    <rect x="25" y="35" width="12" height="8" rx="1"/>
+    <rect x="26" y="36" width="10" height="6" fill="white" opacity="0.3"/>
+    
+    <!-- Передняя часть -->
+    <rect x="22" y="38" width="4" height="5" rx="0.5"/>
+    
+    <!-- Фары -->
+    <circle cx="21" cy="40" r="1" fill="#fbbf24"/>
+    <circle cx="21" cy="42" r="1" fill="#fbbf24"/>
+    
+    <!-- Прицеп -->
+    <rect x="37" y="37" width="20" height="6" rx="0.5"/>
+    <rect x="38" y="38" width="18" height="4" fill="white" opacity="0.2"/>
+    
+    <!-- Колеса -->
+    <circle cx="28" cy="45" r="2.5" fill="#374151"/>
+    <circle cx="28" cy="45" r="1.5" fill="#6b7280"/>
+    <circle cx="50" cy="45" r="2.5" fill="#374151"/>
+    <circle cx="50" cy="45" r="1.5" fill="#6b7280"/>
+    
+    <!-- Детали прицепа -->
+    <rect x="39" y="39" width="16" height="1" fill="#1e40af" opacity="0.5"/>
+    <rect x="39" y="41" width="16" height="1" fill="#1e40af" opacity="0.5"/>
+  </g>
+  
+  <!-- Открытая книга внизу -->
+  <g fill="#1e40af">
+    <rect x="35" y="55" width="10" height="8" rx="1"/>
+    <rect x="36" y="56" width="8" height="6" fill="white" opacity="0.3"/>
+    <line x1="40" y1="56" x2="40" y2="62" stroke="#1e40af" stroke-width="0.5"/>
+    <line x1="37" y1="58" x2="43" y2="58" stroke="#1e40af" stroke-width="0.3"/>
+    <line x1="37" y1="60" x2="43" y2="60" stroke="#1e40af" stroke-width="0.3"/>
+  </g>
+</svg>

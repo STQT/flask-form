@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTM Тест - InterAutoSchool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/logo.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .utm-links {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .utm-link {
+            display: block;
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #1e40af;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .utm-link:hover {
+            background: #1e40af;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .utm-info {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Логотип" class="logo">
+                <h2 class="logo-text">InterAutoSchool</h2>
+                <p class="logo-subtitle">Автошкола</p>
+            </div>
+            
+            <div class="form-header">
+                <h1>UTM Тест</h1>
+                <p>Нажмите на ссылку ниже, чтобы протестировать UTM метки</p>
+            </div>
+            
+            <div class="utm-links">
+                <h3>📊 Тестовые UTM ссылки:</h3>
+                
+                <a href="/?utm_source=instagram&utm_medium=story&utm_campaign=test_2024&utm_content=swipe_up" class="utm-link">
+                    📱 Instagram Story
+                    <div class="utm-info">utm_source=instagram, utm_medium=story</div>
+                </a>
+                
+                <a href="/?utm_source=facebook&utm_medium=post&utm_campaign=test_2024&utm_content=organic" class="utm-link">
+                    📘 Facebook Post
+                    <div class="utm-info">utm_source=facebook, utm_medium=post</div>
+                </a>
+                
+                <a href="/?utm_source=google&utm_medium=cpc&utm_campaign=test_2024&utm_term=автошкола&utm_content=search_ad" class="utm-link">
+                    🔍 Google Ads
+                    <div class="utm-info">utm_source=google, utm_medium=cpc, utm_term=автошкола</div>
+                </a>
+                
+                <a href="/?utm_source=youtube&utm_medium=video&utm_campaign=test_2024&utm_content=description" class="utm-link">
+                    📺 YouTube Video
+                    <div class="utm-info">utm_source=youtube, utm_medium=video</div>
+                </a>
+                
+                <a href="/?utm_source=telegram&utm_medium=channel&utm_campaign=test_2024&utm_content=post" class="utm-link">
+                    📢 Telegram Channel
+                    <div class="utm-info">utm_source=telegram, utm_medium=channel</div>
+                </a>
+                
+                <a href="/?utm_source=direct&utm_medium=website&utm_campaign=test_2024&utm_content=homepage" class="utm-link">
+                    🌐 Direct Traffic
+                    <div class="utm-info">utm_source=direct, utm_medium=website</div>
+                </a>
+            </div>
+            
+            <div class="form-footer">
+                <p>После перехода по ссылке заполните форму - UTM данные сохранятся в Google Sheets</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
