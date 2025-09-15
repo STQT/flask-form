@@ -3,6 +3,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 import os
 from datetime import datetime
+import pytz
 import re
 import csv
 import smtplib
@@ -20,6 +21,11 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
 ]
+
+def get_tashkent_time():
+    """Получение текущего времени в часовом поясе Asia/Tashkent"""
+    tashkent_tz = pytz.timezone('Asia/Tashkent')
+    return datetime.now(tashkent_tz)
 
 def get_google_sheets_client():
     """Инициализация клиента Google Sheets"""
@@ -41,7 +47,7 @@ def save_lead_csv(name, phone, utm_source='', utm_medium='', utm_campaign='', ut
             if not file_exists:
                 writer.writeheader()
             writer.writerow({
-                'Дата и время': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'Дата и время': get_tashkent_time().strftime('%Y-%m-%d %H:%M:%S'),
                 'Имя': name,
                 'Телефон': phone,
                 'UTM Source': utm_source,
@@ -65,12 +71,12 @@ def send_email_lead(name, phone):
         msg = MIMEMultipart()
         msg['From'] = sender_email
         msg['To'] = to_email
-        msg['Subject'] = f"Новый лид InterAutoSchool - {datetime.now().strftime('%d.%m.%Y %H:%M')}"
+        msg['Subject'] = f"Новый лид InterAutoSchool - {get_tashkent_time().strftime('%d.%m.%Y %H:%M')}"
         
         body = f"""
         🚗 Новый лид от InterAutoSchool
         
-        📅 Дата: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}
+        📅 Дата: {get_tashkent_time().strftime('%d.%m.%Y %H:%M:%S')}
         👤 Имя: {name}
         📞 Телефон: {phone}
         """
@@ -100,7 +106,7 @@ def send_telegram_lead(name, phone):
         message = f"""
 🚗 *Новый лид от InterAutoSchool*
 
-📅 *Дата:* {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}
+📅 *Дата:* {get_tashkent_time().strftime('%d.%m.%Y %H:%M:%S')}
 👤 *Имя:* {name}
 📞 *Телефон:* {phone}
         """
@@ -185,7 +191,7 @@ def submit_lead():
                 spreadsheet_id = app.config['GOOGLE_SHEET_ID']
                 if spreadsheet_id != 'your_spreadsheet_id_here':
                     sheet = client.open_by_key(spreadsheet_id).sheet1
-                    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    timestamp = get_tashkent_time().strftime('%Y-%m-%d %H:%M:%S')
                     # Добавляем UTM данные в Google Sheets
                     sheet.append_row([timestamp, name, phone, utm_source, utm_medium, utm_campaign, utm_term, utm_content])
                     success = True
