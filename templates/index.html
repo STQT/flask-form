@@ -130,9 +130,9 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    // Успешная отправка
-                    showSuccessMessage(result.message);
+                    // Успешная отправка - сразу перенаправляем на Telegram
                     form.reset();
+                    window.location.href = 'https://t.me/interautoo';
                 } else {
                     // Ошибка валидации
                     showErrorMessage(result.message);
@@ -173,25 +173,6 @@
             }, 5000);
         }
         
-        function showSuccessMessage(message) {
-            // Показываем сообщение об успехе
-            const successDiv = document.createElement('div');
-            successDiv.className = 'success-message';
-            successDiv.textContent = message + ' Бизнинг Telegram каналимизга ўтинг: https://t.me/interautoo';
-            successDiv.style.display = 'block';
-            
-            const form = document.getElementById('leadForm');
-            form.insertBefore(successDiv, form.firstChild);
-            
-            // Перенаправляем на Telegram канал через 3 секунды
-            setTimeout(() => {
-                if (successDiv.parentNode) {
-                    successDiv.parentNode.removeChild(successDiv);
-                }
-                // Перенаправляем на Telegram канал
-                window.location.href = 'https://t.me/interautoo';
-            }, 3000);
-        }
         
         // Форматирование номера телефона (Узбекистан)
         document.getElementById('phone').addEventListener('input', function(e) {
